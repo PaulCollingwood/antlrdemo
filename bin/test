@@ -1,0 +1,37 @@
+#!/bin/bash
+
+COMMAND=`readlink -f "${0}"`
+BIN_FOLDER=`dirname "${COMMAND}"`
+ROOT_FOLDER=`dirname "${BIN_FOLDER}"`
+TEST_FOLDER="${ROOT_FOLDER}/tests"
+
+compile () {
+    "${BIN_FOLDER}/bin/compile" || exit 1
+}
+
+run_test () {
+    (
+        cd "${ROOT_FOLDER}"
+        python parse.py "${1}"
+    )
+}
+
+run_valid_tests () {
+    for line in $(cat "${TEST_FOLDER}/valid.txt")
+    do
+        if ! run_test "${line}"
+        then
+            echo "FAILED: ${line}" >&2
+        fi
+    done
+}
+
+run_invalid_tests () {
+    for line in $(cat "${TEST_FOLDER}/invalid.txt")
+    do
+        if run_test "${line}"
+        then
+            echo "FAILED: ${line}" >&2
+        fi
+    done
+}
