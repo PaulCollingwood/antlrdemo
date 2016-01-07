@@ -1,0 +1,8 @@
+#!/bin/bash
+
+COMMAND=`readlink -f "${0}"`
+BIN_FOLDER=`dirname "${COMMAND}"`
+ROOT_FOLDER=`dirname "${BIN_FOLDER}"`
+LIB_FOLDER="${ROOT_FOLDER}/lib"
+
+java -jar "${LIB_FOLDER}/antlr-4.5.1-complete.jar" -Dlanguage=Python2 -o "${ROOT_FOLDER}/math_parser" grammar/math.g4
