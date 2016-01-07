@@ -11,16 +11,17 @@ class ValidatingListener(mathListener):
         return not self.characters
 
     def exitNumber(self, ctx):
-        number = ctx.getText()
-        if number not in self.characters:
-            raise Exception("I don't believe that {} is in {}".format(number, self.characters))
-        self.characters.remove(number)
+        for number in ctx.getText():
+            self.parse(number)
 
     def exitOperator(self, ctx):
         operator = ctx.getText()
-        if operator not in self.characters:
-            raise Exception("I don't believe that {} is in {}".format(number, self.characters))
-        self.characters.remove(operator)
+        self.parse(operator)
+
+    def parse(self, character):
+        if character not in self.characters:
+            raise Exception("I don't believe that {} is in {}".format(character, self.characters))
+        self.characters.remove(character)
 
 class BailErrorListener(ErrorListener):
 

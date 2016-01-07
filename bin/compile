@@ -6,3 +6,4 @@ ROOT_FOLDER=`dirname "${BIN_FOLDER}"`
 LIB_FOLDER="${ROOT_FOLDER}/lib"
 
 java -jar "${LIB_FOLDER}/antlr-4.5.1-complete.jar" -Dlanguage=Python2 -o "${ROOT_FOLDER}/math_parser" grammar/math.g4
+touch "${ROOT_FOLDER}/math_parser/grammar/__init__.py"
